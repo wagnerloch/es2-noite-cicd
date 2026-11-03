@@ -1,0 +1,40 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+        # Baixa o código do repositório
+      - uses: actions/checkout@v3
+
+        # Configura o Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+        # Instala as dependências
+      - name: Install dependencies
+        run: npm install
+
+        # Executa o build do projeto
+      - name: Build project
+        run: npm run build
+
+        # Executa os testes (se houver)
+      - name: Run tests
+        run: npm test
+
+        # Configura o Docker
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v2
+
+        # Constrói a imagem Docker
+      - name: Build Docker image
+        run: docker build -t my-app .
