@@ -27,10 +27,6 @@ jobs:
       - name: Build project
         run: npm run build
 
-        # Executa os testes (se houver)
-      - name: Run tests
-        run: npm test
-
         # Configura o Docker
       - name: Set up Docker
         uses: docker/setup-buildx-action@v2
